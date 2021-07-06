@@ -14,9 +14,6 @@ app.use(bodyParser.json())
 
 app.use(requestLogger)
 
-// const connectRoutes = require('./app/routes/connect.js')
-// app.use(connectRoutes)
-
 startup(app)
 
 
