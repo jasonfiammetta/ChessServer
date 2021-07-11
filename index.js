@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const requestLogger = require('./lib/request_logger.js')
+const testChessRules = require('./app/tests/testChessRules.js')
 
 const startup = require('./app/startup/startup.js')
 
@@ -20,5 +21,7 @@ startup(app)
 app.listen(port, () => {
   console.log(`listening on port ${port}`)
 })
+
+testChessRules()
 
 module.exports = app

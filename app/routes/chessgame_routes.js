@@ -1,16 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-// Chess functions, move to another file later
-let getBoard = function(boardId) {
-  return 'board ' + boardId
-}
-let playMove = function(move, board) {
-  return 'board ' + (board + 1)
-}
-let checkLegal = function(board) {
-  return true
-}
+const chessrules = require('../chess/chessrules.js')
+const Chess = new chessrules()
 
 router.post('/ready-for-game', (res, req, next) => {
   // add user to list of available players
@@ -32,13 +24,13 @@ router.post('/play-move', (req, res, next) => {
   let move = req.body.move
 
   // get board of current game
-  let board = getBoard(req.body.boardId)
+  let board = Chess.getBoard(req.body.boardId)
 
 
 
   // check if move is legal
-  let newBoard = playMove(move, board)
-  if(checkLegal(newBoard)) {
+  let newBoard = Chess.playMove(move, board)
+  if(Chess.checkLegal(newBoard)) {
     // save new board
     // let newBoard = db.save(board)
 
