@@ -1,18 +1,24 @@
 const express = require('express')
 const router = express.Router()
 
-// Chess functions, move to another file later
-let getBoard = function(boardId) {
-  return 'board ' + boardId
-}
-let playMove = function(move, board) {
-  return 'board ' + (board + 1)
-}
-let checkLegal = function(board) {
-  return true
-}
+// test messages, move actual message queue elsewhere
+const messages = ['successfully', 'received', 'server messages']
 
-router.post('/ready-for-game', (res, req, next) => {
+router.get('/recent-messages', (req, res, next) => {
+  // later, send only the X most recent messages
+  res.json({ messages })
+})
+
+router.post('/send-message', (req, res, next) => {
+  const message = req.body.message
+  // later, add name of sender
+  console.log('Message:', message)
+  // add message to message queue
+  messages.push(message)
+  res.sendStatus(204)
+})
+
+router.post('/ready-for-game', (req, res, next) => {
   // add user to list of available players
 
 
@@ -23,34 +29,14 @@ router.post('/start-game', (req, res, next) => {
   let msg = 'Checking if game is available'
   // check if another player is available
 
-
+  // initiate game or waiting state
 
   res.send(`<p>${msg}</p>`)
 })
 
-router.post('/play-move', (req, res, next) => {
-  let move = req.body.move
-
-  // get board of current game
-  let board = getBoard(req.body.boardId)
-
-
-
-  // check if move is legal
-  let newBoard = playMove(move, board)
-  if(checkLegal(newBoard)) {
-    // save new board
-    // let newBoard = db.save(board)
-
-    // send confirmation
-    res.json({ movePlayed: true, board: newBoard })
-  } else {
-    // send illegal move
-    res.json({ movePlayed: false, board: board })
-  }
-
-
-
+// allow for spectating ?
+router.post('/join-game', (req, res, next) => {
+  res.send(`<p>You have joined a game</p>`)
 })
 
 module.exports = router
