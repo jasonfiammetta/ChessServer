@@ -1,0 +1,51 @@
+- Controller
+  - Handles Player input
+  - Handles All Boards
+  - Playing Loop:
+    - Receive Move from Player
+    - Validate Move on Player's Board
+    - Play Move on Player's Board
+    - Check if Player has won or otherwise ended the game (draw, resign)
+    - Send new status of game to both Players (and other observers)
+  - Create Game:
+    - Player 1 and Player 2 assigned to whitePlayer and blackPlayer
+    - New Board created
+    - Send status of new game to both Players (and other observers)
+    - await input from whitePlayer
+  - End Game:
+    - A player has won or resigned
+    - Send status of game to both Players (and other observers)
+    - Insert game in database?
+    - Free Players to play other games?
+
+- Board
+  - Controls data representation of a chess board
+    - default: based off FEN: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+      - chess board: double array, 'rnbqkp' representing black pieces, 'RNBQKP' representing white pieces, undefined (or 0?) for blank squares
+      - turn: 'w' for white, 'b' for black, ('o' for game over?)
+      - castle ability: array of four booleans, [true, true, true, true] indicating white kingside castle, white queenside castle, black kingside castle, black queenside castle
+      - pawn: '-' or null for no pawn, 'e4' representing last move was a pawn move eligible for en passant
+      - counter:
+      - half counter:
+  - Plays Moves
+    - Moves received as 'e2e4' indicating piece on e2 moves to e4
+      - 'a7a8q' for promotion to Queen (nbrq for knight, bishop, rook, queen respectively)
+    - return new Board with turn switched, counters advanced, new position, castle and en passant ability updated
+  - Maintains list of moves? (algebraic notation)
+
+- FEN
+  - Forsyth-Edwards Notation, small format for representing the state of a chess board
+  - toFEN
+    - take a Board object and return the FEN string it produces
+  - fromFEN
+    - take a FEN string and produce the Board object
+
+- Chess Rules
+  - Check if a Move is legal
+    - the piece selected to move is moving in an appropriate direction
+    - the Move does not place the moving Player in check
+  - Check if a move wins or ends the game
+    - Opposing Player is in check and cannot get out of check (Win)
+    - Opposing Player is not in check but has no moves (Stalemate - Draw)
+  - Generate possible moves for Player
+    - Create a list of moves by looping over all pieces and adding every legal move they can make

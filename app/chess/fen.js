@@ -7,13 +7,14 @@ let toFEN = function(board) {
 }
 
 let fromFEN = function(fen) {
+  const { fenBoard, fenTurn, fenCastle, fenPawn, fenCounter, fenHalfCounter } = fen.split(' ')
   // let board = new Board()
   let board = [[],[],[],[],[],[],[],[]]
-  let rows = fen.split(' ')[0].split('/')
+  let rows = fenBoard.split('/')
   for(let i = 0; i < 8; i++) {
     for(let j = 0; j < 8; j++) {
       if(/\d/.test(rows[i][j])) { // check if regular expression works
-        j += rows[i][j]
+        j += rows[i][j] - 1 // check if this works
       } else {
         board[i][j] = rows[i][j]
       }

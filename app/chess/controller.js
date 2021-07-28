@@ -5,7 +5,7 @@ const status = { PLAYING: 'PLAYING', ADJOURNED: 'ADJOURNED', OVER: 'OVER', WHITE
 
 // bundle boards with players and moves
 function newGame(whitePlayer, blackPlayer, startingFEN) {
-  let board = startingFEN ? Chess.fromFEN(startingFEN) : Chess.newBoard()
+  // let board = startingFEN ? Chess.fromFEN(startingFEN) : Chess.newBoard()
   games.push({
     id: games.length, // perhaps come up with a more elegant id system later
     white: whitePlayer,
@@ -42,4 +42,10 @@ playMove(player, move, gameId) {
 
   //
   Chess.validateMove(games[gameId])
+}
+
+module.exports = {
+  newGame,
+  getBoard,
+  playMove,
 }
