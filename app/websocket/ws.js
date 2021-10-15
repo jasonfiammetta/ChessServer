@@ -7,7 +7,7 @@ const startWSServer = function () { //noServer by default, add param for port/se
     // ws.on('pong', () => { ws.isAlive = true })
 
     ws.on('message', (message) => {
-      console.log('message received:', message)
+      message = message.toString()
       //do stuff with message
       // move this function elsewhere
         // set client state:
@@ -20,8 +20,9 @@ const startWSServer = function () { //noServer by default, add param for port/se
       broadcast(wss, message)
     })
     // send welcome message immediately upon connecting
-    console.log('sending welcome message')
+    console.log('sending welcome message',)
     ws.send('Hi, connected to websocket server')
+    // send unique id
   })
   return wss
 }
